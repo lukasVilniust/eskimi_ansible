@@ -19,7 +19,7 @@
   - name: create test1 user
     tags: always
     user:
-      name: test1
+      name: lolius1
       groups: root
 
   - name: add ssh key for test1 user

@@ -1,0 +1,33 @@
+---
+
+- name: user module demo
+  hosts: all
+  become: true
+  tasks:
+    - name: user example present
+      ansible.builtin.user:
+        name: example
+        groups:
+          - adm
+          - User
+        state: "present"
+        system: false
+        create_home: true
+        home: "/home/example"
+        comment: "Ansible example"
+        generate_ssh_key: true
+
+    - name: add ssh key for example user
+      tags: always
+      authorized_key:
+        user: example
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOxbT7lOeiHgz6bWSh1qfftMfWzVvjLtSeSpcjacCHF+ ansible"
+
+    - name: add sudoers file for example user (administrator)
+      tags: always
+      copy:
+        src: sudoer_example
+        dest: /etc/sudoers.d/example
+        owner: root
+        group: root
+        mode: 0440
