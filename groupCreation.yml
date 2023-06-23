@@ -1,0 +1,22 @@
+---
+
+- name: create groups with roles
+  hosts: all
+  become: true
+  vars:
+    user_group: "user"
+    specialized_user_group: "specialized_user"
+    spectator_group: "spectator"
+  tasks:
+    - name: create group user
+      ansible.builtin.group:
+        name: "{{ user_group }}"
+        state: present
+    - name: create group specialized user
+      ansible.builtin.group:
+        name: "{{ specialized_user_group }}"
+        state: present
+    - name: create group spectator
+      ansible.builtin.group:
+        name: "{{ spectator_group }}"
+        state: present
